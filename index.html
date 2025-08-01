@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Political Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="screen active">
+            <div class="screen-content">
+                <h1>Political Simulator</h1>
+                <p>Rise to power and lead your nation to greatness!</p>
+                <button id="start-game" class="btn btn-primary">Start New Game</button>
+                <button id="load-game" class="btn btn-secondary">Load Game</button>
+            </div>
+        </div>
+
+        <!-- Country Selection Screen -->
+        <div id="country-screen" class="screen">
+            <div class="screen-content">
+                <h2>Choose Your Country</h2>
+                <p>Select the nation you wish to lead:</p>
+                <div class="country-grid">
+                    <div class="country-card" data-country="usa">
+                        <h3>United States</h3>
+                        <p>Federal Republic • Population: 331M • GDP: $23T</p>
+                    </div>
+                    <div class="country-card" data-country="uk">
+                        <h3>United Kingdom</h3>
+                        <p>Constitutional Monarchy • Population: 67M • GDP: $3.1T</p>
+                    </div>
+                    <div class="country-card" data-country="germany">
+                        <h3>Germany</h3>
+                        <p>Federal Republic • Population: 83M • GDP: $4.2T</p>
+                    </div>
+                    <div class="country-card" data-country="france">
+                        <h3>France</h3>
+                        <p>Semi-Presidential Republic • Population: 68M • GDP: $2.9T</p>
+                    </div>
+                    <div class="country-card" data-country="india">
+                        <h3>India</h3>
+                        <p>Federal Republic • Population: 1.4B • GDP: $3.7T</p>
+                    </div>
+                    <div class="country-card" data-country="japan">
+                        <h3>Japan</h3>
+                        <p>Constitutional Monarchy • Population: 125M • GDP: $4.9T</p>
+                    </div>
+                </div>
+                <button id="country-next" class="btn btn-primary" disabled>Continue</button>
+            </div>
+        </div>
+
+        <!-- Character Creation Screen -->
+        <div id="character-screen" class="screen">
+            <div class="screen-content">
+                <h2>Create Your Character</h2>
+                <div class="form-group">
+                    <label for="character-name">Full Name:</label>
+                    <input type="text" id="character-name" placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                    <label for="character-age">Age:</label>
+                    <input type="number" id="character-age" min="35" max="80" value="45">
+                </div>
+                <div class="form-group">
+                    <label for="character-background">Background:</label>
+                    <select id="character-background">
+                        <option value="">Select Background</option>
+                        <option value="lawyer">Lawyer</option>
+                        <option value="businessman">Business Executive</option>
+                        <option value="military">Military Officer</option>
+                        <option value="academic">Academic/Professor</option>
+                        <option value="journalist">Journalist</option>
+                        <option value="activist">Social Activist</option>
+                        <option value="doctor">Medical Doctor</option>
+                        <option value="engineer">Engineer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="character-ideology">Political Ideology:</label>
+                    <select id="character-ideology">
+                        <option value="">Select Ideology</option>
+                        <option value="liberal">Liberal</option>
+                        <option value="conservative">Conservative</option>
+                        <option value="progressive">Progressive</option>
+                        <option value="centrist">Centrist</option>
+                        <option value="socialist">Socialist</option>
+                        <option value="libertarian">Libertarian</option>
+                        <option value="nationalist">Nationalist</option>
+                    </select>
+                </div>
+                <button id="character-back" class="btn btn-secondary">Back</button>
+                <button id="character-next" class="btn btn-primary" disabled>Continue</button>
+            </div>
+        </div>
+
+        <!-- Party Creation Screen -->
+        <div id="party-screen" class="screen">
+            <div class="screen-content">
+                <h2>Create Your Political Party</h2>
+                <div class="form-group">
+                    <label for="party-name">Party Name:</label>
+                    <input type="text" id="party-name" placeholder="Enter party name">
+                </div>
+                <div class="form-group">
+                    <label for="party-ideology">Party Ideology:</label>
+                    <select id="party-ideology">
+                        <option value="">Select Party Ideology</option>
+                        <option value="liberal-democratic">Liberal Democratic</option>
+                        <option value="conservative">Conservative</option>
+                        <option value="social-democratic">Social Democratic</option>
+                        <option value="green">Green/Environmental</option>
+                        <option value="populist">Populist</option>
+                        <option value="libertarian">Libertarian</option>
+                        <option value="nationalist">Nationalist</option>
+                        <option value="communist">Communist</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Key Policy Priorities (Select 3):</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" value="economy"> Economic Growth</label>
+                        <label><input type="checkbox" value="healthcare"> Healthcare Reform</label>
+                        <label><input type="checkbox" value="education"> Education</label>
+                        <label><input type="checkbox" value="environment"> Environmental Protection</label>
+                        <label><input type="checkbox" value="security"> National Security</label>
+                        <label><input type="checkbox" value="immigration"> Immigration Reform</label>
+                        <label><input type="checkbox" value="infrastructure"> Infrastructure</label>
+                        <label><input type="checkbox" value="social-justice"> Social Justice</label>
+                        <label><input type="checkbox" value="tax-reform"> Tax Reform</label>
+                    </div>
+                </div>
+                <button id="party-back" class="btn btn-secondary">Back</button>
+                <button id="party-next" class="btn btn-primary" disabled>Start Campaign</button>
+            </div>
+        </div>
+
+        <!-- Election Campaign Screen -->
+        <div id="campaign-screen" class="screen">
+            <div class="screen-content">
+                <h2>Election Campaign</h2>
+                <div class="campaign-stats">
+                    <div class="stat-card">
+                        <h3>Support Rating</h3>
+                        <div class="progress-bar">
+                            <div id="support-progress" class="progress-fill" style="width: 25%"></div>
+                        </div>
+                        <span id="support-percentage">25%</span>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Campaign Funds</h3>
+                        <span id="campaign-funds">$1,000,000</span>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Days Until Election</h3>
+                        <span id="days-remaining">90</span>
+                    </div>
+                </div>
+                <div class="campaign-actions">
+                    <h3>Campaign Actions</h3>
+                    <div class="action-grid">
+                        <button class="action-btn" data-action="rally">
+                            <h4>Hold Rally</h4>
+                            <p>Cost: $50,000 • Support: +2-5%</p>
+                        </button>
+                        <button class="action-btn" data-action="debate">
+                            <h4>TV Debate</h4>
+                            <p>Cost: $25,000 • Support: +1-8%</p>
+                        </button>
+                        <button class="action-btn" data-action="ads">
+                            <h4>TV Advertisements</h4>
+                            <p>Cost: $100,000 • Support: +3-6%</p>
+                        </button>
+                        <button class="action-btn" data-action="grassroots">
+                            <h4>Grassroots Campaign</h4>
+                            <p>Cost: $30,000 • Support: +1-4%</p>
+                        </button>
+                        <button class="action-btn" data-action="policy">
+                            <h4>Policy Announcement</h4>
+                            <p>Cost: $20,000 • Support: +2-7%</p>
+                        </button>
+                        <button class="action-btn" data-action="social-media">
+                            <h4>Social Media Campaign</h4>
+                            <p>Cost: $15,000 • Support: +1-3%</p>
+                        </button>
+                    </div>
+                </div>
+                <div class="campaign-events">
+                    <h3>Recent Events</h3>
+                    <div id="event-log"></div>
+                </div>
+                <button id="skip-to-election" class="btn btn-warning">Skip to Election Day</button>
+            </div>
+        </div>
+
+        <!-- Parliament Formation Screen -->
+        <div id="parliament-screen" class="screen">
+            <div class="screen-content">
+                <h2>Election Results & Parliament Formation</h2>
+                <div id="election-results">
+                    <h3>Election Results</h3>
+                    <div id="results-summary">
+                        <div class="result-item">
+                            <span class="party-name">Your Party</span>
+                            <span class="vote-percentage">0%</span>
+                            <span class="seat-count">0 seats</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="party-name">Opposition A</span>
+                            <span class="vote-percentage">0%</span>
+                            <span class="seat-count">0 seats</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="party-name">Opposition B</span>
+                            <span class="vote-percentage">0%</span>
+                            <span class="seat-count">0 seats</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="party-name">Others</span>
+                            <span class="vote-percentage">0%</span>
+                            <span class="seat-count">0 seats</span>
+                        </div>
+                    </div>
+                    <div id="parliament-visualization">
+                        <h4>Parliament Seats</h4>
+                        <div id="parliament-chamber">
+                            <!-- Seats will be dynamically generated -->
+                        </div>
+                        <div id="seat-legend">
+                            <div class="legend-item">
+                                <div class="seat-dot your-party"></div>
+                                <span>Your Party</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="seat-dot opposition-a"></div>
+                                <span>Opposition A</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="seat-dot opposition-b"></div>
+                                <span>Opposition B</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="seat-dot others"></div>
+                                <span>Others</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="coalition-building">
+                    <h3>Coalition Building</h3>
+                    <p>Form alliances to secure a majority in parliament</p>
+                    <div id="coalition-options">
+                        <div class="coalition-card">
+                            <h4>Opposition A Coalition</h4>
+                            <p>Form coalition with Opposition A for stable majority</p>
+                            <button class="coalition-btn" data-coalition="opposition-a">Form Coalition</button>
+                        </div>
+                        <div class="coalition-card">
+                            <h4>Opposition B Coalition</h4>
+                            <p>Form coalition with Opposition B for progressive agenda</p>
+                            <button class="coalition-btn" data-coalition="opposition-b">Form Coalition</button>
+                        </div>
+                        <div class="coalition-card">
+                            <h4>Minority Government</h4>
+                            <p>Form minority government without formal coalition</p>
+                            <button class="coalition-btn" data-coalition="minority">Go Alone</button>
+                        </div>
+                    </div>
+                </div>
+                <button id="form-government" class="btn btn-primary" disabled>Form Government</button>
+            </div>
+        </div>
+
+        <!-- Cabinet Selection Screen -->
+        <div id="cabinet-screen" class="screen">
+            <div class="screen-content">
+                <h2>Select Your Cabinet</h2>
+                <p>Choose ministers for key government positions</p>
+                <div class="cabinet-positions">
+                    <div class="position-card">
+                        <h3>Minister of Finance</h3>
+                        <select class="minister-select" data-position="finance">
+                            <option value="">Select Minister</option>
+                        </select>
+                    </div>
+                    <div class="position-card">
+                        <h3>Minister of Foreign Affairs</h3>
+                        <select class="minister-select" data-position="foreign">
+                            <option value="">Select Minister</option>
+                        </select>
+                    </div>
+                    <div class="position-card">
+                        <h3>Minister of Defense</h3>
+                        <select class="minister-select" data-position="defense">
+                            <option value="">Select Minister</option>
+                        </select>
+                    </div>
+                    <div class="position-card">
+                        <h3>Minister of Interior</h3>
+                        <select class="minister-select" data-position="interior">
+                            <option value="">Select Minister</option>
+                        </select>
+                    </div>
+                    <div class="position-card">
+                        <h3>Minister of Health</h3>
+                        <select class="minister-select" data-position="health">
+                            <option value="">Select Minister</option>
+                        </select>
+                    </div>
+                    <div class="position-card">
+                        <h3>Minister of Education</h3>
+                        <select class="minister-select" data-position="education">
+                            <option value="">Select Minister</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="cabinet-confirm" class="btn btn-primary" disabled>Confirm Cabinet</button>
+            </div>
+        </div>
+
+        <!-- Main Game Screen -->
+        <div id="main-screen" class="screen">
+            <div class="screen-content">
+                <header class="game-header">
+                    <h2 id="country-name">Country Name</h2>
+                    <div class="header-stats">
+                        <span>Approval: <span id="approval-rating">65%</span></span>
+                        <span>Term: <span id="term-progress">Year 1 of 4</span></span>
+                    </div>
+                </header>
+                
+                <nav class="main-tabs">
+                    <button class="tab-btn active" data-tab="economy">Economy</button>
+                    <button class="tab-btn" data-tab="parliament">Parliament</button>
+                    <button class="tab-btn" data-tab="diplomacy">Diplomacy</button>
+                    <button class="tab-btn" data-tab="internal">Internal Affairs</button>
+                    <button class="tab-btn" data-tab="geopolitics">Geopolitics</button>
+                    <button class="tab-btn" data-tab="military">Military</button>
+                </nav>
+
+                <div class="tab-content">
+                    <!-- Economy Tab -->
+                    <div id="economy-tab" class="tab-panel active">
+                        <h3>Economic Management</h3>
+                        <div class="economic-indicators">
+                            <div class="indicator">
+                                <h4>GDP Growth</h4>
+                                <span id="gdp-growth">2.5%</span>
+                            </div>
+                            <div class="indicator">
+                                <h4>Unemployment</h4>
+                                <span id="unemployment">5.2%</span>
+                            </div>
+                            <div class="indicator">
+                                <h4>Inflation</h4>
+                                <span id="inflation">2.1%</span>
+                            </div>
+                            <div class="indicator">
+                                <h4>Budget Balance</h4>
+                                <span id="budget-balance">-2.3%</span>
+                            </div>
+                        </div>
+                        <div class="economic-actions">
+                            <button class="policy-btn" data-policy="tax-cut">Cut Taxes</button>
+                            <button class="policy-btn" data-policy="spending-increase">Increase Spending</button>
+                            <button class="policy-btn" data-policy="infrastructure">Infrastructure Investment</button>
+                            <button class="policy-btn" data-policy="regulation">Deregulation</button>
+                        </div>
+                    </div>
+
+                    <!-- Parliament Tab -->
+                    <div id="parliament-tab" class="tab-panel">
+                        <h3>Parliament Sessions</h3>
+                        <div class="parliament-stats">
+                            <div class="stat">
+                                <h4>Your Seats</h4>
+                                <span id="your-seats">0</span>
+                            </div>
+                            <div class="stat">
+                                <h4>Coalition Seats</h4>
+                                <span id="coalition-seats">0</span>
+                            </div>
+                            <div class="stat">
+                                <h4>Opposition Seats</h4>
+                                <span id="opposition-seats">0</span>
+                            </div>
+                            <div class="stat">
+                                <h4>Bills Passed</h4>
+                                <span id="bills-passed">0</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bill-proposal">
+                            <h4>Propose New Bill</h4>
+                            <div class="form-group">
+                                <label for="bill-title">Bill Title:</label>
+                                <input type="text" id="bill-title" placeholder="Enter bill title">
+                            </div>
+                            <div class="form-group">
+                                <label for="bill-category">Category:</label>
+                                <select id="bill-category">
+                                    <option value="">Select Category</option>
+                                    <option value="economic">Economic Policy</option>
+                                    <option value="social">Social Policy</option>
+                                    <option value="defense">Defense & Security</option>
+                                    <option value="environmental">Environmental</option>
+                                    <option value="healthcare">Healthcare</option>
+                                    <option value="education">Education</option>
+                                    <option value="foreign">Foreign Affairs</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="bill-description">Description:</label>
+                                <textarea id="bill-description" placeholder="Describe the bill's purpose and impact"></textarea>
+                            </div>
+                            <button id="propose-bill" class="btn btn-primary">Propose Bill</button>
+                        </div>
+                        
+                        <div class="active-bills">
+                            <h4>Active Bills</h4>
+                            <div id="bills-list">
+                                <!-- Bills will be dynamically added here -->
+                            </div>
+                        </div>
+                        
+                        <div class="voting-history">
+                            <h4>Recent Votes</h4>
+                            <div id="vote-history">
+                                <!-- Voting history will be displayed here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Diplomacy Tab -->
+                    <div id="diplomacy-tab" class="tab-panel">
+                        <h3>Foreign Relations</h3>
+                        <div class="diplomatic-relations">
+                            <div class="relation-card">
+                                <h4>Allied Nations</h4>
+                                <div id="allies-list"></div>
+                            </div>
+                            <div class="relation-card">
+                                <h4>Neutral Nations</h4>
+                                <div id="neutral-list"></div>
+                            </div>
+                            <div class="relation-card">
+                                <h4>Hostile Nations</h4>
+                                <div id="hostile-list"></div>
+                            </div>
+                        </div>
+                        <div class="diplomatic-actions">
+                            <button class="policy-btn" data-policy="trade-deal">Negotiate Trade Deal</button>
+                            <button class="policy-btn" data-policy="alliance">Form Alliance</button>
+                            <button class="policy-btn" data-policy="sanctions">Impose Sanctions</button>
+                            <button class="policy-btn" data-policy="summit">Host Summit</button>
+                        </div>
+                    </div>
+
+                    <!-- Internal Affairs Tab -->
+                    <div id="internal-tab" class="tab-panel">
+                        <h3>Internal Affairs</h3>
+                        <div class="internal-stats">
+                            <div class="stat">
+                                <h4>Crime Rate</h4>
+                                <span id="crime-rate">Medium</span>
+                            </div>
+                            <div class="stat">
+                                <h4>Education Index</h4>
+                                <span id="education-index">7.2/10</span>
+                            </div>
+                            <div class="stat">
+                                <h4>Healthcare Quality</h4>
+                                <span id="healthcare-quality">Good</span>
+                            </div>
+                            <div class="stat">
+                                <h4>Infrastructure</h4>
+                                <span id="infrastructure-quality">Fair</span>
+                            </div>
+                        </div>
+                        <div class="internal-actions">
+                            <button class="policy-btn" data-policy="police-funding">Increase Police Funding</button>
+                            <button class="policy-btn" data-policy="education-reform">Education Reform</button>
+                            <button class="policy-btn" data-policy="healthcare-expansion">Expand Healthcare</button>
+                            <button class="policy-btn" data-policy="infrastructure-upgrade">Upgrade Infrastructure</button>
+                        </div>
+                    </div>
+
+                    <!-- Geopolitics Tab -->
+                    <div id="geopolitics-tab" class="tab-panel">
+                        <h3>Geopolitical Strategy</h3>
+                        <div class="geopolitical-map">
+                            <h4>Regional Influence</h4>
+                            <div id="influence-map"></div>
+                        </div>
+                        <div class="geopolitical-actions">
+                            <button class="policy-btn" data-policy="regional-leadership">Assert Regional Leadership</button>
+                            <button class="policy-btn" data-policy="international-mediation">Mediate Conflicts</button>
+                            <button class="policy-btn" data-policy="economic-bloc">Join Economic Bloc</button>
+                            <button class="policy-btn" data-policy="global-initiative">Launch Global Initiative</button>
+                        </div>
+                    </div>
+
+                    <!-- Military Tab -->
+                    <div id="military-tab" class="tab-panel">
+                        <h3>Defense & Security</h3>
+                        <div class="military-stats">
+                            <div class="stat">
+                                <h4>Military Strength</h4>
+                                <span id="military-strength">Strong</span>
+                            </div>
+                            <div class="stat">
+                                <h4>Defense Budget</h4>
+                                <span id="defense-budget">2.1% GDP</span>
+                            </div>
+                            <div class="stat">
+                                <h4>Security Level</h4>
+                                <span id="security-level">High</span>
+                            </div>
+                            <div class="stat">
+                                <h4>Cyber Defense</h4>
+                                <span id="cyber-defense">Advanced</span>
+                            </div>
+                        </div>
+                        <div class="military-actions">
+                            <button class="policy-btn" data-policy="military-modernization">Modernize Military</button>
+                            <button class="policy-btn" data-policy="defense-increase">Increase Defense Spending</button>
+                            <button class="policy-btn" data-policy="peacekeeping">Deploy Peacekeepers</button>
+                            <button class="policy-btn" data-policy="cyber-security">Enhance Cyber Security</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Event Modal -->
+        <div id="event-modal" class="modal">
+            <div class="modal-content">
+                <h3 id="event-title"></h3>
+                <p id="event-description"></p>
+                <div id="event-options"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
